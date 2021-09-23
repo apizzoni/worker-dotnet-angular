@@ -1,9 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0
-
+       
 # Angular cli
 RUN apt-get update && \
-    apt-get install nodejs -y && \
     apt-get install yarn -y && \
+    curl -L https://deb.nodesource.com/setup_14.x | sh && \
+    apt-get install nodejs -y &&\
     curl -L https://npmjs.org/install.sh | sh && \
     echo n | npm install -g @angular/cli@12
 
@@ -14,3 +15,5 @@ RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 >
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     chmod +x kubectl && \
     mv kubectl /usr/local/bin/ 
+
+

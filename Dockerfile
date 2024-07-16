@@ -1,16 +1,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 
-# Install Node.js 21
-RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
+# Install Node.js v20.11.1
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get update && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs=20.11.1-1nodesource1
+
+# Install npm 10.2.4
+RUN npm install -g npm@10.2.4
 
 # Install additional packages
 RUN apt-get update && \
     apt-get install -y ssh nuget lftp
-
-# Update npm to the latest version
-RUN npm install -g npm@latest
 
 # Install Angular CLI and yarn
 RUN npm install -g @angular/cli@latest yarn

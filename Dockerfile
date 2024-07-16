@@ -1,19 +1,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 
-RUN curl -fsSL https://deb.nodesource.com/setup_19.x | sh
+# Install Node.js 21
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
+    apt-get update && \
+    apt-get install -y nodejs
 
-# Angular cli
+# Install additional packages
 RUN apt-get update && \
-    apt-get install nodejs -y && \
-    apt-get install ssh -y && \
-    apt-get install nuget -y && \
-    apt-get install lftp -y && \
-    apt-get install openjdk-11-jre -y && \
-    curl -L https://npmjs.org/install.sh | sh && \
-    echo n | npm install -g @angular/cli@latest && \
-    npm install -g yarn
+    apt-get install -y ssh nuget lftp
 
-# Kubernetes and helm
+# Update npm to the latest version
+RUN npm install -g npm@latest
+
+# Install Angular CLI and yarn
+RUN npm install -g @angular/cli@latest yarn
+
+# Install Kubernetes and Helm
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh && \
     chmod 700 get_helm.sh && \
     ./get_helm.sh && \
